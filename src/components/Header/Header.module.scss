@@ -1,0 +1,20 @@
+@import '../../App.scss';
+
+.Header {
+  height: 8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-grey-light-1);
+  padding: 0 6rem;
+
+  &__Logo {
+    text-decoration: none;
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.85rem;
+    font-weight: 500;
+    transform: skew(2deg, -2deg);
+    padding: 0 3.5px;
+    @include gradient-border-filled;
+  }
+}

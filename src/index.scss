@@ -1,0 +1,118 @@
+/////////////////////////
+// FONTS
+/////////////////////////
+@font-face {
+  font-family: 'NanumBarunGothic';
+  src: url('./assets/fonts/NanumBarunGothic.ttf');
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  src: url('./assets/fonts/NanumBarunGothicBold.ttf');
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  src: url('./assets/fonts/NanumBarunGothicLight.ttf');
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  src: url('./assets/fonts/NanumBarunGothicUltraLight.ttf');
+  font-style: normal;
+  font-weight: 100;
+}
+@font-face {
+  font-family: 'NanumMyeongjo';
+  src: url('./assets/fonts/NanumMyeongjo.ttf');
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('./assets/fonts/Comfortaa-Medium.ttf');
+  font-style: normal;
+  font-weight: 500;
+}
+
+/////////////////////////
+// MIXINS
+/////////////////////////
+@mixin gradient-border($border-width) {
+  border-radius: 100px;
+  border: $border-width solid transparent;
+  background-image: var(--linear-gradient),
+    linear-gradient(var(--color-grey-light-1), var(--color-grey-light-1)),
+    var(--linear-gradient);
+  background-origin: border-box;
+  -webkit-background-clip: text, padding-box, border-box;
+  background-clip: text, padding-box, border-box;
+  color: transparent;
+}
+
+@mixin gradient-border-filled {
+  background-image: var(--linear-gradient);
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: var(--color-grey-light-1);
+}
+
+/////////////////////////
+// BASIC SETTINGS
+/////////////////////////
+:root {
+  --color-primary-1: #12c2e9;
+  --color-primary-2: #c471ed;
+  --color-primary-3: #f64f59;
+
+  --linear-gradient: linear-gradient(
+    to right bottom,
+    var(--color-primary-1),
+    var(--color-primary-2),
+    var(--color-primary-3)
+  );
+
+  --color-grey-light-1: #f7f7f7;
+  --color-grey-light-2: #e6e6e6;
+
+  --color-grey-dark-1: #333;
+  // Black
+  --color-grey-dark-2: #000;
+}
+
+::selection {
+  background-color: var(--color-primary-1);
+  color: var(--color-grey-light-1);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'NanumBarunGothic', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 4vw 0;
+  background: linear-gradient(
+      to right bottom,
+      var(--color-primary-1),
+      var(--color-primary-2),
+      var(--color-primary-3)
+    )
+    no-repeat;
+}
