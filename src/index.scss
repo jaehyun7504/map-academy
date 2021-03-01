@@ -75,12 +75,13 @@
     var(--color-primary-3)
   );
 
+  --color-black: #000;
+  --color-white: #fff;
+
   --color-grey-light-1: #f7f7f7;
   --color-grey-light-2: #e6e6e6;
 
   --color-grey-dark-1: #333;
-  // Black
-  --color-grey-dark-2: #000;
 }
 
 ::selection {
