@@ -42,8 +42,8 @@
 // MIXINS
 /////////////////////////
 @mixin gradient-border($border-width) {
-  border-radius: 100px;
   border: $border-width solid transparent;
+  border-radius: 1000px;
   background-image: var(--linear-gradient),
     linear-gradient(var(--color-grey-light-1), var(--color-grey-light-1)),
     var(--linear-gradient);
@@ -108,7 +108,6 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 4vw 0;
   background: linear-gradient(
       to right bottom,
       var(--color-primary-1),
