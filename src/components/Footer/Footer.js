@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Footer.scss';
+
 const footer = () => (
   <footer className="Footer">
     <span className="Footer-copyright">

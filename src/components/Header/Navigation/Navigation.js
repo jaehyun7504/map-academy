@@ -8,7 +8,7 @@ const navigation = () => (
     <table className="Navigation-list">
       <li className="Navigation-item">
         <NavLink
-          className="Navigation-link Navigation-link-1"
+          className="Navigation-link"
           activeClassName="Navigation-link-active"
           to="/about"
         >
@@ -17,7 +17,7 @@ const navigation = () => (
       </li>
       <li className="Navigation-item">
         <NavLink
-          className="Navigation-link Navigation-link-2"
+          className="Navigation-link"
           activeClassName="Navigation-link-active"
           to="/notices"
         >
@@ -26,7 +26,7 @@ const navigation = () => (
       </li>
       <li className="Navigation-item">
         <NavLink
-          className="Navigation-link Navigation-link-3"
+          className="Navigation-link"
           activeClassName="Navigation-link-active"
           to="/articles"
         >
@@ -35,7 +35,7 @@ const navigation = () => (
       </li>
       <li className="Navigation-item">
         <NavLink
-          className="Navigation-link Navigation-link-4"
+          className="Navigation-link"
           activeClassName="Navigation-link-active"
           to="/lectures"
         >

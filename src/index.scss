@@ -38,6 +38,7 @@
   font-weight: 500;
 }
 
+/*
 /////////////////////////
 // MIXINS
 /////////////////////////
@@ -59,10 +60,12 @@
   background-clip: border-box;
   color: var(--color-grey-light-1);
 }
+*/
 
 /////////////////////////
 // BASIC SETTINGS
 /////////////////////////
+/*
 :root {
   --color-primary-1: #12c2e9;
   --color-primary-2: #c471ed;
@@ -88,6 +91,7 @@
   background-color: var(--color-primary-1);
   color: var(--color-grey-light-1);
 }
+*/
 
 *,
 *::before,
@@ -108,6 +112,7 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*
   background: linear-gradient(
       to right bottom,
       var(--color-primary-1),
@@ -115,4 +120,5 @@ body {
       var(--color-primary-3)
     )
     no-repeat;
+  */
 }
