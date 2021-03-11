@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
 const User = require("./models/user");
 const noticeRoute = require("./routes/notice");
@@ -14,6 +15,7 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
+app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(async (req, res, next) => {
@@ -25,6 +27,7 @@ app.use(async (req, res, next) => {
     console.error(err);
   }
 });
+
 app.use("/api/notices/", noticeRoute);
 app.use("/api/articles/", articleRoute);
 app.use("/api/lectures/", lectureRoute);

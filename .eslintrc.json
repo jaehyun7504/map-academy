@@ -13,7 +13,8 @@
     "no-return-await": "off",
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
-    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "prefer-destructuring": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }]
-  }
+  },
+  "parser": "babel-eslint"
 }
