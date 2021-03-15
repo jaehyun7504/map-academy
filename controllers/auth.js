@@ -1,9 +1,11 @@
+const path = require("path");
 const crypto = require("crypto");
-
+const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
-const sgMail = require('@sendgrid/mail');
-
+const sgMail = require("@sendgrid/mail");
 const User = require("../models/user");
+
+dotenv.config({ path: path.join(__dirname, "..", "config.env") });
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -56,38 +58,83 @@ exports.postLogin = async (req, res, next) => {
   }
 };
 
-exports.postReset = async(req, res, next) => {
-  crypto.randomBytes(32, (err, buf) => {
-    if (err) throw err;
-    const token = buf.toString("hex");
-    const email = req.body.email;
-    const user = await User.findOne({ email: email });
-    if (!user) {
-      return res.status(404).json({
-        message: "error",
-        error: "입력하신 이메일로 가입한 이용자가 존재하지 않습니다.",
-      });
-    }
-    user.resetToken = token;
-    user.resetTokenExpiration = Date.now() + 300000;
-    await user.save();
-    const msg = {
-      to: req.body.email,
-      from: process.env.SENDGRID_SENDER_EMAIL,
-      subject: '[맵학원] 비밀번호 복구 요청',
-      html: `<p>비밀번호를 복구하려면 <a href="http://www.mapacademy.com/api/reset/${token}">여기</a>를 클릭하세요.</p>`,
-    };
-    sgMail.send(msg);
-    return res.status(204).end()
-  });
+exports.postReset = async (req, res, next) => {
+  try {
+    crypto.randomBytes(32, async (err, buf) => {
+      if (err) throw err;
+      const token = buf.toString("hex");
+      const email = req.body.email;
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        return res.status(404).json({
+          message: "error",
+          error: "입력하신 이메일로 가입한 이용자가 존재하지 않습니다.",
+        });
+      }
+      user.resetToken = token;
+      user.resetTokenExpiration = Date.now() + 300000;
+      await user.save();
+      const msg = {
+        to: req.body.email,
+        from: process.env.SENDGRID_SENDER_EMAIL,
+        subject: "[맵학원] 비밀번호 복구 요청",
+        html: `<p>비밀번호를 복구하려면 <a href="http://127.0.0.1:5000/reset/${token}">여기</a>를 클릭하세요.</p>`,
+      };
+      sgMail.send(msg);
+      return res.status(204).end();
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-exports.getNewPassword = (req, res, next) => {};
+exports.getNewPassword = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiration: {
+        $gt: Date.now(),
+      },
+    });
+    res.status(200).render("new-password", {
+      userId: user._id.toString(),
+      passwordToken: token,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-exports.postNewPassword = (req, res, next) => {};
+exports.postNewPassword = async (req, res, next) => {
+  try {
+    const newPassword = req.body.password;
+    const userId = req.body.userId;
+    const passwordToken = req.body.passwordToken;
+    const user = await User.findOne({
+      resetToken: passwordToken,
+      resetTokenExpiration: {
+        $gt: Date.now(),
+      },
+      _id: userId,
+    });
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    user.password = hashedPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpiration = undefined;
+    await user.save();
+    res.redirect("/complete");
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
-    return res.status(204).end()
+    return res.status(204).end();
   });
+};
+
+exports.getComplete = (req, res, next) => {
+  res.status(200).render("complete");
 };
