@@ -47,8 +47,8 @@ body {
 .container__input {
   font-size: 1.4rem;
   width: 85%;
-  padding: 0.5rem;
-  border: 1px solid black;
+  padding: 0.7rem 1.4rem;
+  border: 1px solid #080808;
   border-radius: 10px;
   outline: none;
 }
@@ -61,7 +61,7 @@ body {
   border-color: #6dd5fa #0083b0;
   border-radius: 7px;
   background-image: linear-gradient(to bottom, #6dd5fa, #0083b0);
-  box-shadow: inset 0 1px 0 0 #dcf2fc;
+  box-shadow: inset 0 1px 0 0 #f7f7f7;
   cursor: pointer;
   outline: none;
 }
