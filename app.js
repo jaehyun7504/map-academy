@@ -68,6 +68,12 @@ app.use("/api/notices/", noticeRoute);
 app.use("/api/articles/", articleRoute);
 app.use("/api/lectures/", lectureRoute);
 app.use("/api/", authRoutes);
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: "error",
+    error: "잘못된 요청입니다.",
+  });
+});
 
 mongoose
   .connect(MONGODB_URI, {
