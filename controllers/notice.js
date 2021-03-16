@@ -1,11 +1,22 @@
 const Notice = require("../models/notice");
 
+const NOTICES_PER_PAGE = 10;
+
 exports.getNotices = async (req, res) => {
   try {
-    const notices = await Notice.find();
+    const page = +req.query.page || 1;
+    const numberOfNotices = await Notice.countDocuments();
+    const notices = await Notice.find()
+      .skip((page - 1) * NOTICES_PER_PAGE)
+      .limit(NOTICES_PER_PAGE);
     res.status(200).json({
       message: "success",
-      data: notices,
+      data: {
+        notices: notices,
+        page: page,
+        hasNext: numberOfNotices > NOTICES_PER_PAGE * page,
+        hasPrev: page > 1,
+      },
     });
   } catch (err) {
     res.status(400).json({
@@ -35,7 +46,6 @@ exports.createNotice = async (req, res) => {
     const newNotice = new Notice({
       title: req.body.title,
       body: req.body.body,
-      imageUrls: req.body.imageUrls,
       date: new Date(),
       userId: req.user._id,
     });
@@ -57,7 +67,6 @@ exports.updateNotice = async (req, res) => {
     const updatedNotice = await Notice.findById(req.params.id);
     updatedNotice.title = req.body.title;
     updatedNotice.body = req.body.body;
-    updatedNotice.imageUrls = req.body.imageUrls;
     await updatedNotice.save();
     res.status(200).json({
       message: "success",
