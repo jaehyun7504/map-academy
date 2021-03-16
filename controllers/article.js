@@ -1,15 +1,23 @@
 const Article = require("../models/article");
+const deleteFile = require("../utils/deleteFile");
 
-exports.getCreateArticle = (req, res) => {
-  res.render("getCreateArticle");
-};
+const ARTICLES_PER_PAGE = 10;
 
 exports.getArticles = async (req, res) => {
   try {
-    const articles = await Article.find();
+    const page = +req.query.page || 1;
+    const numberOfArticles = await Article.countDocuments();
+    const articles = await Article.find()
+      .skip((page - 1) * ARTICLES_PER_PAGE)
+      .limit(ARTICLES_PER_PAGE);
     res.status(200).json({
       message: "success",
-      data: articles,
+      data: {
+        articles,
+        page: page,
+        hasNext: numberOfArticles > ARTICLES_PER_PAGE * page,
+        hasPrev: page > 1,
+      },
     });
   } catch (err) {
     res.status(400).json({
@@ -36,13 +44,12 @@ exports.getArticle = async (req, res) => {
 
 exports.createArticle = async (req, res) => {
   try {
-    console.log(req.user);
     const newArticle = new Article({
       title: req.body.title,
       body: req.body.body,
-      imageUrls: req.file.path || undefined,
+      imageUrl: req.file.path || undefined,
       date: new Date(),
-      userId: req.user._id,
+      // userId: req.user._id,
     });
     await newArticle.save();
     res.status(201).json({
@@ -62,7 +69,10 @@ exports.updateArticle = async (req, res) => {
     const updatedArticle = await Article.findById(req.params.id);
     updatedArticle.title = req.body.title;
     updatedArticle.body = req.body.body;
-    updatedArticle.imageUrls = req.body.imageUrls;
+    if (req.file) {
+      deleteFile(updatedArticle.imageUrl);
+      updatedArticle.imageUrl = req.file.path;
+    }
     await updatedArticle.save();
     res.status(200).json({
       message: "success",
@@ -78,12 +88,14 @@ exports.updateArticle = async (req, res) => {
 
 exports.deleteArticle = async (req, res) => {
   try {
+    const deletedArticle = await Article.findById(req.params.id);
+    deleteFile(deletedArticle.imageUrl);
     await Article.findByIdAndDelete(req.params.id);
     res.status(204).end();
   } catch (err) {
     res.status(400).json({
       message: "error",
-      error: err.message,
+      error: err,
     });
   }
 };

@@ -12,7 +12,7 @@ exports.getNotices = async (req, res) => {
     res.status(200).json({
       message: "success",
       data: {
-        notices: notices,
+        notices,
         page: page,
         hasNext: numberOfNotices > NOTICES_PER_PAGE * page,
         hasPrev: page > 1,
