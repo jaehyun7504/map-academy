@@ -81,11 +81,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/create", (req, res) => {
-  res.render("temp", {
-    title: "Create Article",
-  });
-});
 app.get("/reset/:token", authController.getNewPassword);
 app.get("/complete", authController.getComplete);
 app.use("/api/notices/", noticeRoute);
