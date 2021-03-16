@@ -1,5 +1,9 @@
 const Article = require("../models/article");
 
+exports.getCreateArticle = (req, res) => {
+  res.render("getCreateArticle");
+};
+
 exports.getArticles = async (req, res) => {
   try {
     const articles = await Article.find();
@@ -32,10 +36,11 @@ exports.getArticle = async (req, res) => {
 
 exports.createArticle = async (req, res) => {
   try {
+    console.log(req.user);
     const newArticle = new Article({
       title: req.body.title,
       body: req.body.body,
-      imageUrls: req.body.imageUrls,
+      imageUrls: req.file.path || undefined,
       date: new Date(),
       userId: req.user._id,
     });
