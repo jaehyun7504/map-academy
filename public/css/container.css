@@ -11,8 +11,5 @@ html {
 }
 
 body {
-  position: relative;
   box-sizing: border-box;
-  height: 100vh;
-  background-image: linear-gradient(to right bottom, #0083b0, #6dd5fa);
 }
