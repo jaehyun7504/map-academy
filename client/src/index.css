@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: url("./assets/fonts/NanumBarunGothic.ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: url("./assets/fonts/NanumBarunGothicBold.ttf");
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: url("./assets/fonts/NanumBarunGothicLight.ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: url("./assets/fonts/NanumBarunGothicUltraLight.ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+@font-face {
+  font-family: "NanumMyeongjo";
+  src: url("./assets/fonts/NanumMyeongjo.ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "NanumBarunGothic", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
