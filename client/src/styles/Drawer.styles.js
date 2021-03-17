@@ -2,12 +2,17 @@ import { makeStyles } from "@material-ui/styles";
 import sizes from "./_sizes";
 
 const useStyles = makeStyles({
-  Layout: {
-    maxWidth: "1366px",
-    margin: "0 auto",
+  MenuDrawer: {
+    display: "none",
     [sizes.down("md")]: {
-      padding: "0 2rem",
+      display: "block",
     },
+  },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: "auto",
   },
 });
 

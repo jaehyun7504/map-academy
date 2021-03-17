@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useStyles from "../styles/Header.styles";
 import Navigation from "./Navigation.component";
+import Drawer from "./Drawer.component";
 
 function Header() {
   const classes = useStyles();
@@ -14,6 +15,7 @@ function Header() {
       <button className={classes.button} type="button">
         로그인
       </button>
+      <Drawer />
     </header>
   );
 }

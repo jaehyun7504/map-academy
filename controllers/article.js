@@ -9,7 +9,9 @@ exports.getArticles = async (req, res) => {
     const numberOfArticles = await Article.countDocuments();
     const articles = await Article.find()
       .skip((page - 1) * ARTICLES_PER_PAGE)
-      .limit(ARTICLES_PER_PAGE);
+      .limit(ARTICLES_PER_PAGE)
+      .sort({ date: "desc" })
+      .select("title date");
     res.status(200).json({
       message: "success",
       data: {
@@ -48,7 +50,7 @@ exports.createArticle = async (req, res) => {
       title: req.body.title,
       body: req.body.body,
       imageUrl: req.file.path || undefined,
-      date: new Date(),
+      date: new Date().toISOString().split("T")[0],
       // userId: req.user._id,
     });
     await newArticle.save();

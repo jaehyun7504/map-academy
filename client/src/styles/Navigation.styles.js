@@ -1,8 +1,12 @@
 import { makeStyles } from "@material-ui/styles";
+import sizes from "./_sizes";
 
 const useStyles = makeStyles({
   Navigation: {
     width: "33.33%",
+    [sizes.down("md")]: {
+      display: "none",
+    },
   },
   list: {
     listStyle: "none",

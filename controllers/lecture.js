@@ -35,7 +35,7 @@ exports.createLecture = async (req, res) => {
     const newLecture = new Lecture({
       title: req.body.title,
       videoUrl: req.body.videoUrl,
-      date: new Date(),
+      date: new Date().toISOString().split("T")[0],
       userId: req.user._id,
     });
     await newLecture.save();

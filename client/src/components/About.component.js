@@ -14,9 +14,6 @@ function About() {
           있는 능력을 끌어내는 마중물과 같은 것입니다. 교육자는 교육 과정을
           창조적으로 운영해야 하지만 자신이 창조자라는 교만에 빠지면 안됩니다.
         </p>
-        <button className={classes.button} type="button">
-          상담 신청하기
-        </button>
       </div>
       <div className={classes.container}>
         <div className={classes.motto}>

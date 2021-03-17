@@ -6,7 +6,7 @@ function Navigation() {
   const classes = useStyles();
   return (
     <nav className={classes.Navigation}>
-      <table className={classes.list}>
+      <ul className={classes.list}>
         <li className={classes.item}>
           <NavLink
             className={classes.link}
@@ -43,7 +43,7 @@ function Navigation() {
             특강
           </NavLink>
         </li>
-      </table>
+      </ul>
     </nav>
   );
 }

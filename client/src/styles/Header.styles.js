@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
+import sizes from "./_sizes";
 
 const useStyles = makeStyles({
   Header: {
@@ -11,7 +12,11 @@ const useStyles = makeStyles({
   logo: {
     textDecoration: "none",
   },
-  button: {},
+  button: {
+    [sizes.down("md")]: {
+      display: "none",
+    },
+  },
 });
 
 export default useStyles;

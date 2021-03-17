@@ -8,7 +8,9 @@ exports.getNotices = async (req, res) => {
     const numberOfNotices = await Notice.countDocuments();
     const notices = await Notice.find()
       .skip((page - 1) * NOTICES_PER_PAGE)
-      .limit(NOTICES_PER_PAGE);
+      .limit(NOTICES_PER_PAGE)
+      .sort({ date: "desc" })
+      .select("title date");
     res.status(200).json({
       message: "success",
       data: {
@@ -46,7 +48,7 @@ exports.createNotice = async (req, res) => {
     const newNotice = new Notice({
       title: req.body.title,
       body: req.body.body,
-      date: new Date(),
+      date: new Date().toISOString().split("T")[0],
       userId: req.user._id,
     });
     await newNotice.save();

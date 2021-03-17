@@ -6,7 +6,7 @@ const articleSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
   imageUrl: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: String, required: true },
   // userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
