@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from "react";
 import useStyles from "../styles/Articles.styles";
+import Article from "./Article.component";
 import Footer from "./Footer.component";
+import Loader from "./Loader.component";
 
 function Articles(props) {
   const classes = useStyles();
+
   const [articles, setArticles] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    console.log("useEffect!");
+    fetch("/api/articles/")
+      .then((res) => res.json())
+      .then((data) => {
+        setArticles(data.data.articles);
+        setLoader(false);
+      })
+      .catch((err) => console.error(err));
   }, []);
+
+  let list = <Loader />;
+  if (!loader) list = articles.map((article) => <Article article={article} />);
 
   return (
     <div className={classes.Articles}>
+      {list}
       <Footer />
     </div>
   );
