@@ -49,7 +49,6 @@ exports.createNotice = async (req, res) => {
       title: req.body.title,
       body: req.body.body,
       date: new Date().toISOString().split("T")[0],
-      userId: req.user._id,
     });
     await newNotice.save();
     res.status(201).json({

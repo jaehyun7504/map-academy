@@ -49,9 +49,8 @@ exports.createArticle = async (req, res) => {
     const newArticle = new Article({
       title: req.body.title,
       body: req.body.body,
-      imageUrl: req.file.path || undefined,
+      imageUrl: req.file ? req.file.path.replace("\\", "/") : null,
       date: new Date().toISOString().split("T")[0],
-      // userId: req.user._id,
     });
     await newArticle.save();
     res.status(201).json({

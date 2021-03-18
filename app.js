@@ -4,9 +4,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
-const csrf = require("csurf");
 const multer = require("multer");
 const { nanoid } = require("nanoid");
 const dotenv = require("dotenv");
@@ -25,11 +22,6 @@ const MONGODB_URI = `
 `;
 
 const app = express();
-const store = new MongoDBStore({
-  uri: MONGODB_URI,
-  collection: "sessions",
-});
-const csrfProtection = csrf();
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "images"),
@@ -46,7 +38,6 @@ app.set("views", "views");
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({
     storage: fileStorage,
@@ -55,29 +46,14 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-  })
-);
-// app.use(csrfProtection);
-app.use(async (req, res, next) => {
-  try {
-    if (!req.session.user) return next();
-    const user = await User.findById(req.session.user._id);
-    if (!user) return next();
-    req.user = user;
-    next();
-  } catch (err) {
-    console.error(err);
-  }
-});
+
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  // res.locals.csrfToken = req.csrfToken();
+  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
