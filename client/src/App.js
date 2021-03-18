@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import Layout from "./components/Layout.component";
+import Content from "./components/Content.component";
 import About from "./components/About.component";
 import Notices from "./components/Notices.component";
 import Articles from "./components/Articles.component";
@@ -17,7 +18,7 @@ function App() {
           <TransitionGroup>
             <CSSTransition
               key={location.key}
-              classNames="transition"
+              classNames="Content"
               timeout={200}
             >
               <Switch location={location}>
@@ -28,36 +29,36 @@ function App() {
                   exact
                   path="/about"
                   render={(routeProps) => (
-                    <div className="content">
+                    <Content>
                       <About {...routeProps} />
-                    </div>
+                    </Content>
                   )}
                 />
                 <Route
                   exact
                   path="/notices"
                   render={(routeProps) => (
-                    <div className="content">
+                    <Content>
                       <Notices {...routeProps} />
-                    </div>
+                    </Content>
                   )}
                 />
                 <Route
                   exact
                   path="/articles"
                   render={(routeProps) => (
-                    <div className="content">
+                    <Content>
                       <Articles {...routeProps} />
-                    </div>
+                    </Content>
                   )}
                 />
                 <Route
                   exact
                   path="/lectures"
                   render={(routeProps) => (
-                    <div className="content">
+                    <Content>
                       <Lectures {...routeProps} />
-                    </div>
+                    </Content>
                   )}
                 />
               </Switch>
