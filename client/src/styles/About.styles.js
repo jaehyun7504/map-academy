@@ -2,7 +2,9 @@ import { makeStyles } from "@material-ui/styles";
 import sizes from "./_sizes";
 
 const useStyles = makeStyles({
-  About: {},
+  About: {
+    position: "absolute",
+  },
   h1: {},
   h2: {},
   h4: {},

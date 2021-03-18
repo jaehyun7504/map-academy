@@ -1,5 +1,6 @@
 import React from "react";
 import useStyles from "../styles/About.styles";
+import Footer from "./Footer.component";
 
 function About() {
   const classes = useStyles();
@@ -48,6 +49,7 @@ function About() {
           </h2>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
