@@ -10,7 +10,9 @@ function Item({ item, i, p, match }) {
     <tr className={classes.row}>
       <td className={classes.col}>{order}</td>
       <td className={classes.col}>
-        <Link to={`${match.url}/${item._id}`}>{item.title}</Link>
+        <div className={classes.container}>
+          <Link to={`${match.url}/${item._id}`}>{item.title}</Link>
+        </div>
       </td>
       <td className={classes.col}>{item.date}</td>
     </tr>

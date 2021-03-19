@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
+import sizes from "./_sizes";
 
 const useStyles = makeStyles({
   List: {
@@ -14,6 +15,9 @@ const useStyles = makeStyles({
     minHeight: "calc(100% - 5rem)",
     margin: "0 auto",
     padding: "5rem 0",
+    [sizes.down("sm")]: {
+      width: "80%",
+    },
   },
   table: {
     width: "100%",
@@ -26,12 +30,18 @@ const useStyles = makeStyles({
   col: {
     "&:nth-of-type(1)": {
       width: "5%",
+      [sizes.down("sm")]: {
+        display: "none",
+      },
     },
     "&:nth-of-type(2)": {
       width: "80%",
     },
     "&:nth-of-type(3)": {
       width: "15%",
+      [sizes.down("sm")]: {
+        display: "none",
+      },
     },
   },
 });

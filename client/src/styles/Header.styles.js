@@ -13,6 +13,7 @@ const useStyles = makeStyles({
     textDecoration: "none",
   },
   button: {
+    cursor: "pointer",
     [sizes.down("md")]: {
       display: "none",
     },
