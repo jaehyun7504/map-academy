@@ -18,6 +18,7 @@ const useStyles = makeStyles({
   item: {},
   link: {
     textDecoration: "none",
+    cursor: "pointer",
   },
   linkActive: {},
 });

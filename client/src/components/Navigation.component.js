@@ -4,6 +4,7 @@ import useStyles from "../styles/Navigation.styles";
 
 function Navigation() {
   const classes = useStyles();
+  const clickHandler = () => alert("준비 중입니다.");
   return (
     <nav className={classes.Navigation}>
       <ul className={classes.list}>
@@ -35,13 +36,9 @@ function Navigation() {
           </NavLink>
         </li>
         <li className={classes.item}>
-          <NavLink
-            className={classes.link}
-            activeClassName={classes.linkActive}
-            to="/lectures"
-          >
+          <p className={classes.link} onClick={clickHandler}>
             특강
-          </NavLink>
+          </p>
         </li>
       </ul>
     </nav>

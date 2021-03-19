@@ -50,15 +50,7 @@ function App() {
                     </Content>
                   )}
                 />
-                <Route
-                  exact
-                  path="/lectures"
-                  render={(routeProps) => (
-                    <Content>
-                      <List type="lectures" {...routeProps} />
-                    </Content>
-                  )}
-                />
+                <Redirect to="/about" />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
