@@ -21,14 +21,14 @@ exports.postSignup = async (req, res, next) => {
     }
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({
+    const newUser = new User({
       email: email,
       password: hashedPassword,
     });
-    await user.save();
+    await newUser.save();
     res.status(200).json({
       message: "success",
-      data: user,
+      data: newUser,
     });
   } catch (err) {
     if (!err.statusCode) err.statusCode = 500;
