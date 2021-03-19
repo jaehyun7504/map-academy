@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import useStyles from "../styles/List.styles";
 import Loader from "./Loader.component";
 import Item from "./Item.component";
+import Pagination from "./Pagination.component";
 import Footer from "./Footer.component";
 
-function List({ type }) {
+function List({ type, location }) {
   const classes = useStyles();
 
   const [items, setItems] = useState([]);
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/${type}/`)
+    fetch(`/api/${type}/${location.search ? `${location.search}` : ""}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
         setItems(data.data);
         setLoader(false);
       })
       .catch((err) => console.error(err));
-  }, [type]);
+  }, [type, location.search]);
 
   let list = <Loader />;
   if (!loader)
@@ -32,6 +32,8 @@ function List({ type }) {
   return (
     <div className={classes.List}>
       {list}
+      {items.hasPrev && <Pagination direct="left" page={items.page - 1} />}
+      {items.hasNext && <Pagination direct="right" page={items.page + 1} />}
       <Footer />
     </div>
   );
