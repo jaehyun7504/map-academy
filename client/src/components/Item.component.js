@@ -2,14 +2,18 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import useStyles from "../styles/Item.styles";
 
-function Item({ item, match }) {
+function Item({ item, i, p, match }) {
   const classes = useStyles();
+  const order = (10 * (p - 1) + i + 1 + "").padStart(2, "0");
 
   return (
-    <div className={classes.Item}>
-      <Link to={`${match.url}/${item._id}`}>{item.title}</Link>
-      <Link to={`${match.url}/${item._id}`}>{item.date}</Link>
-    </div>
+    <tr className={classes.row}>
+      <td className={classes.col}>{order}</td>
+      <td className={classes.col}>
+        <Link to={`${match.url}/${item._id}`}>{item.title}</Link>
+      </td>
+      <td className={classes.col}>{item.date}</td>
+    </tr>
   );
 }
 

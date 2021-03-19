@@ -21,19 +21,48 @@ function List({ type, location }) {
       .catch((err) => console.error(err));
   }, [type, location.search]);
 
-  let list = <Loader />;
-  if (!loader)
-    list = items[type] ? (
-      items[type].map((item) => <Item key={item._id} item={item} />)
-    ) : (
-      <p>콘텐츠가 존재하지 않습니다.</p>
+  let rows = (
+    <tr className={classes.row}>
+      <td className={classes.col}></td>
+      <td className={classes.col}>준비 중입니다.</td>
+      <td className={classes.col}></td>
+    </tr>
+  );
+  if (items[type]) {
+    rows = items[type].map((item, i) => (
+      <Item key={item._id} item={item} i={i} p={items.page} />
+    ));
+  }
+  const prevBtn = items.hasPrev ? (
+    <Pagination direction="left" page={items.page - 1} />
+  ) : null;
+  const nextBtn = items.hasNext ? (
+    <Pagination direction="right" page={items.page + 1} />
+  ) : null;
+
+  let table = <Loader />;
+  if (!loader) {
+    table = (
+      <>
+        <table className={classes.table}>
+          <thead>
+            <tr className={classes.row}>
+              <th className={classes.col}></th>
+              <th className={classes.col}>제목</th>
+              <th className={classes.col}>작성일</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+        {prevBtn}
+        {nextBtn}
+      </>
     );
+  }
 
   return (
     <div className={classes.List}>
-      {list}
-      {items.hasPrev && <Pagination direct="left" page={items.page - 1} />}
-      {items.hasNext && <Pagination direct="right" page={items.page + 1} />}
+      <div className={classes.container}>{table}</div>
       <Footer />
     </div>
   );
@@ -41,6 +70,8 @@ function List({ type, location }) {
 
 export default List;
 
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 /*
 const [state, setState] = useState({
   title: "",

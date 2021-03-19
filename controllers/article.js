@@ -10,8 +10,7 @@ exports.getArticles = async (req, res) => {
     const articles = await Article.find()
       .skip((page - 1) * ARTICLES_PER_PAGE)
       .limit(ARTICLES_PER_PAGE)
-      .sort({ date: "desc" })
-      .select("title date");
+      .sort({ date: "desc" });
     res.status(200).json({
       message: "success",
       data: {

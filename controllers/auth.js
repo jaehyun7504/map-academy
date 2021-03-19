@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const sgMail = require("@sendgrid/mail");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const { validationResult } = require("express-validator");
 
 dotenv.config({ path: path.join(__dirname, "..", "config.env") });
 
@@ -12,6 +13,13 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.postSignup = async (req, res, next) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      const error = new Error("인증이 실패하였습니다.");
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
     const email = req.body.email;
     const user = await User.findOne({ email });
     if (user) {
@@ -38,6 +46,13 @@ exports.postSignup = async (req, res, next) => {
 
 exports.postLogin = async (req, res, next) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      const error = new Error("인증이 실패하였습니다.");
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
     const email = req.body.email;
     const user = await User.findOne({ email });
     if (!user) {
@@ -73,6 +88,13 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postReset = async (req, res, next) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      const error = new Error("인증이 실패하였습니다.");
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
     crypto.randomBytes(32, async (err, buf) => {
       const resetToken = buf.toString("hex");
       const email = req.body.email;

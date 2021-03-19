@@ -70,6 +70,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({
     message: "error",
     error: err.message,
+    data: err.data,
   });
 });
 
