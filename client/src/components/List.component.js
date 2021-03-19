@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from "react";
-import useStyles from "../styles/Articles.styles";
-import Article from "./Article.component";
-import Footer from "./Footer.component";
+import useStyles from "../styles/List.styles";
 import Loader from "./Loader.component";
+import Item from "./Item.component";
+import Footer from "./Footer.component";
 
-function Articles(props) {
+function List({ type }) {
   const classes = useStyles();
 
-  const [articles, setArticles] = useState([]);
+  const [items, setItems] = useState([]);
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    fetch("/api/articles/")
+    fetch(`/api/${type}/`)
       .then((res) => res.json())
       .then((data) => {
-        setArticles(data.data.articles);
+        console.log(data.data);
+        setItems(data.data);
         setLoader(false);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [type]);
 
   let list = <Loader />;
-  if (!loader) list = articles.map((article) => <Article article={article} />);
+  if (!loader)
+    list = items[type] ? (
+      items[type].map((item) => <Item key={item._id} item={item} />)
+    ) : (
+      <p>콘텐츠가 존재하지 않습니다.</p>
+    );
 
   return (
-    <div className={classes.Articles}>
+    <div className={classes.List}>
       {list}
       <Footer />
     </div>
   );
 }
 
-export default Articles;
+export default List;
 
 /*
 const [state, setState] = useState({

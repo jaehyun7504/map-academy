@@ -7,7 +7,6 @@ const morgan = require("morgan");
 const multer = require("multer");
 const { nanoid } = require("nanoid");
 const dotenv = require("dotenv");
-const User = require("./models/user");
 const noticeRoute = require("./routes/notice");
 const articleRoute = require("./routes/article");
 const lectureRoute = require("./routes/lecture");
@@ -49,10 +48,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
-  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
@@ -67,6 +63,13 @@ app.use((req, res, next) => {
   res.status(404).json({
     message: "error",
     error: "잘못된 요청입니다.",
+  });
+});
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    message: "error",
+    error: err.message,
   });
 });
 

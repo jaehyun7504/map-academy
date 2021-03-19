@@ -6,9 +6,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Layout from "./components/Layout.component";
 import Content from "./components/Content.component";
 import About from "./components/About.component";
-import Notices from "./components/Notices.component";
-import Articles from "./components/Articles.component";
-import Lectures from "./components/Lectures.component";
+import List from "./components/List.component";
 
 function App() {
   return (
@@ -39,7 +37,7 @@ function App() {
                   path="/notices"
                   render={(routeProps) => (
                     <Content>
-                      <Notices {...routeProps} />
+                      <List type="notices" {...routeProps} />
                     </Content>
                   )}
                 />
@@ -48,7 +46,7 @@ function App() {
                   path="/articles"
                   render={(routeProps) => (
                     <Content>
-                      <Articles {...routeProps} />
+                      <List type="articles" {...routeProps} />
                     </Content>
                   )}
                 />
@@ -57,7 +55,7 @@ function App() {
                   path="/lectures"
                   render={(routeProps) => (
                     <Content>
-                      <Lectures {...routeProps} />
+                      <List type="lectures" {...routeProps} />
                     </Content>
                   )}
                 />
