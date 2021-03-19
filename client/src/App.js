@@ -7,6 +7,8 @@ import Layout from "./components/Layout.component";
 import Content from "./components/Content.component";
 import About from "./components/About.component";
 import List from "./components/List.component";
+import Notice from "./components/Notice.component";
+import Article from "./components/Article.component";
 
 function App() {
   return (
@@ -34,10 +36,28 @@ function App() {
                 />
                 <Route
                   exact
+                  path="/notices/:id"
+                  render={(routeProps) => (
+                    <Content>
+                      <Notice {...routeProps} />
+                    </Content>
+                  )}
+                />
+                <Route
+                  exact
                   path="/notices"
                   render={(routeProps) => (
                     <Content>
                       <List type="notices" {...routeProps} />
+                    </Content>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/articles/:id"
+                  render={(routeProps) => (
+                    <Content>
+                      <Article {...routeProps} />
                     </Content>
                   )}
                 />

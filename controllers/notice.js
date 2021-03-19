@@ -9,6 +9,7 @@ exports.getNotices = async (req, res) => {
     const notices = await Notice.find()
       .skip((page - 1) * NOTICES_PER_PAGE)
       .limit(NOTICES_PER_PAGE)
+      .select("title date")
       .sort({ date: "desc" });
     res.status(200).json({
       message: "success",
