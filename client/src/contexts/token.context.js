@@ -5,10 +5,10 @@ export const TokenContext = createContext();
 export const TokenDispatchContext = createContext();
 
 export function TokenProvider({ children }) {
-  const [token, tokenDispatch] = useReducer(tokenReducer, "");
+  const [token, tDispatch] = useReducer(tokenReducer, "");
   return (
     <TokenContext.Provider value={token}>
-      <TokenDispatchContext.Provider value={tokenDispatch}>
+      <TokenDispatchContext.Provider value={tDispatch}>
         {children}
       </TokenDispatchContext.Provider>
     </TokenContext.Provider>

@@ -12,12 +12,14 @@ const useStyles = makeStyles({
     textDecoration: "none",
   },
   login: {
-    cursor: "pointer",
-    display: ({ isAuth }) => (isAuth ? "block" : "none"),
-  },
-  logout: {
+    width: "6rem",
     cursor: "pointer",
     display: ({ isAuth }) => (!isAuth ? "block" : "none"),
+  },
+  logout: {
+    width: "6rem",
+    cursor: "pointer",
+    display: ({ isAuth }) => (isAuth ? "block" : "none"),
   },
 });
 

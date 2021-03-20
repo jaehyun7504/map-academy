@@ -1,44 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import Button from "@material-ui/core/Button";
 import useStyles from "../styles/Login.styles";
 
-function Login({ show, submit }) {
+function Login({ show, submit, toggleShow }) {
   const classes = useStyles({ show });
-  const [input, setInput] = useState({
+
+  const form = useRef(null);
+
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [submitted, setSubmitted] = useState(false);
+
   const handleChange = (e) => {
-    setInput({
-      ...input,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    submit(input);
-    setInput({
+    submit(formData);
+    document.getElementById("email").blur();
+    document.getElementById("password").blur();
+    setFormData({
       email: "",
       password: "",
     });
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 1000);
   };
+
   return (
-    <form className={classes.Login} onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="email"
-        placeholder="이메일"
-        value={input.email}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="비밀번호"
-        value={input.password}
-        onChange={handleChange}
-      />
-      <button type="submit">로그인</button>
-    </form>
+    <>
+      <div className={classes.backdrop} onClick={toggleShow} />
+      <ValidatorForm
+        className={classes.Login}
+        ref={form}
+        onSubmit={handleSubmit}
+      >
+        <div className={classes.close} onClick={toggleShow}>
+          <i class="fas fa-times" />
+        </div>
+        <TextValidator
+          id="email"
+          className={classes.input}
+          label="Email"
+          onChange={handleChange}
+          name="email"
+          value={formData.email}
+          validators={["required", "isEmail"]}
+          errorMessages={[
+            "이메일을 입력하세요.",
+            "유효하지 않은 이메일입니다.",
+          ]}
+        />
+        <TextValidator
+          id="password"
+          className={classes.input}
+          label="Password"
+          onChange={handleChange}
+          name="password"
+          type="password"
+          value={formData.password}
+          validators={["required"]}
+          errorMessages={["비밀번호를 입력하세요."]}
+        />
+        <Button
+          className={classes.button}
+          color="primary"
+          variant="contained"
+          type="submit"
+          disabled={submitted}
+        >
+          로그인
+        </Button>
+      </ValidatorForm>
+    </>
   );
 }
 

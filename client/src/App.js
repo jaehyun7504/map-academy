@@ -3,8 +3,8 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-import { TokenProvider } from "./contexts/token.context";
 import { IsAuthProvider } from "./contexts/isAuth.context";
+import { TokenProvider } from "./contexts/token.context";
 import Layout from "./components/Layout.component";
 import Content from "./components/Content.component";
 import About from "./components/About.component";
@@ -14,8 +14,8 @@ import Article from "./components/Article.component";
 
 function App() {
   return (
-    <TokenProvider>
-      <IsAuthProvider>
+    <IsAuthProvider>
+      <TokenProvider>
         <Layout>
           <Route
             render={({ location }) => (
@@ -81,8 +81,8 @@ function App() {
             )}
           />
         </Layout>
-      </IsAuthProvider>
-    </TokenProvider>
+      </TokenProvider>
+    </IsAuthProvider>
   );
 }
 

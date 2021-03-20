@@ -5,10 +5,10 @@ export const IsAuthContext = createContext();
 export const IsAuthDispatchContext = createContext();
 
 export function IsAuthProvider({ children }) {
-  const [isAuth, isAuthDispatch] = useReducer(isAuthReducer, true);
+  const [isAuth, aDispatch] = useReducer(isAuthReducer, false);
   return (
     <IsAuthContext.Provider value={isAuth}>
-      <IsAuthDispatchContext.Provider value={isAuthDispatch}>
+      <IsAuthDispatchContext.Provider value={aDispatch}>
         {children}
       </IsAuthDispatchContext.Provider>
     </IsAuthContext.Provider>
