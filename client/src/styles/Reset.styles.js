@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 import sizes from "./_sizes";
 
 const useStyles = makeStyles({
-  Login: {
+  Reset: {
     display: ({ show }) => (show ? "flex" : "none"),
     flexDirection: "column",
     justifyContent: "center",
@@ -56,19 +56,6 @@ const useStyles = makeStyles({
     [sizes.down("xs")]: {
       top: "1.5rem",
       right: "1.5rem",
-    },
-  },
-  reset: {
-    fontSize: "1.4rem",
-    marginTop: "2rem",
-    borderBottom: "1px solid transparent",
-    cursor: "pointer",
-    "&:hover": {
-      borderBottom: "1px solid #000",
-    },
-    "&:active": {
-      color: "#00f",
-      borderBottom: "1px solid #00f",
     },
   },
 });

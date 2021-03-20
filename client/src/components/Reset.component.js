@@ -1,23 +1,21 @@
 import React, { useState, useRef } from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import Button from "@material-ui/core/Button";
-import useStyles from "../styles/Login.styles";
+import useStyles from "../styles/Reset.styles";
 
-function Login({ show, submit, hideLogin, showReset }) {
+function Reset({ show, submit, hideReset }) {
   const classes = useStyles({ show });
 
   const form = useRef(null);
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+      email: e.target.value,
     });
   };
 
@@ -25,10 +23,8 @@ function Login({ show, submit, hideLogin, showReset }) {
     e.preventDefault();
     submit(formData);
     document.getElementById("email").blur();
-    document.getElementById("password").blur();
     setFormData({
       email: "",
-      password: "",
     });
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 1000);
@@ -36,13 +32,13 @@ function Login({ show, submit, hideLogin, showReset }) {
 
   return (
     <>
-      <div className={classes.backdrop} onClick={hideLogin} />
+      <div className={classes.backdrop} onClick={hideReset} />
       <ValidatorForm
-        className={classes.Login}
+        className={classes.Reset}
         ref={form}
         onSubmit={handleSubmit}
       >
-        <div className={classes.close} onClick={hideLogin}>
+        <div className={classes.close} onClick={hideReset}>
           <i className="fas fa-times" />
         </div>
         <TextValidator
@@ -58,17 +54,6 @@ function Login({ show, submit, hideLogin, showReset }) {
             "유효하지 않은 이메일입니다.",
           ]}
         />
-        <TextValidator
-          id="password"
-          className={classes.input}
-          label="Password"
-          onChange={handleChange}
-          name="password"
-          type="password"
-          value={formData.password}
-          validators={["required"]}
-          errorMessages={["비밀번호를 입력하세요."]}
-        />
         <Button
           className={classes.button}
           color="primary"
@@ -76,14 +61,11 @@ function Login({ show, submit, hideLogin, showReset }) {
           type="submit"
           disabled={submitted}
         >
-          로그인
-        </Button>
-        <p className={classes.reset} onClick={showReset}>
           비밀번호 재설정
-        </p>
+        </Button>
       </ValidatorForm>
     </>
   );
 }
 
-export default Login;
+export default Reset;

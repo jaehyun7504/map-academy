@@ -13,19 +13,20 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.postSignup = async (req, res, next) => {
   try {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-      const error = new Error("인증이 실패하였습니다.");
-      error.statusCode = 422;
-      error.data = errors.array();
-      return next(error);
+    const errors = validationResult(req);
+    const errorsArr = errors.array();
+    if (!errors.isEmpty()) {
+      const validationError = new Error(errorsArr[0].msg);
+      validationError.statusCode = 422;
+      validationError.data = errors.array();
+      return next(validationError);
     }
     const email = req.body.email;
     const user = await User.findOne({ email });
     if (user) {
-      const error = new Error("이미 가입한 이메일입니다.");
-      error.statusCode = 422;
-      return next(error);
+      const userError = new Error("이미 가입한 이메일입니다.");
+      userError.statusCode = 422;
+      return next(userError);
     }
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -46,12 +47,13 @@ exports.postSignup = async (req, res, next) => {
 
 exports.postLogin = async (req, res, next) => {
   try {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-      const error = new Error("인증이 실패하였습니다.");
-      error.statusCode = 422;
-      error.data = errors.array();
-      return next(error);
+    const errors = validationResult(req);
+    const errorsArr = errors.array();
+    if (!errors.isEmpty()) {
+      const validationError = new Error(errorsArr[0].msg);
+      validationError.statusCode = 422;
+      validationError.data = errors.array();
+      return next(validationError);
     }
     const email = req.body.email;
     const user = await User.findOne({ email });
@@ -65,9 +67,9 @@ exports.postLogin = async (req, res, next) => {
     const password = req.body.password;
     const doMatch = await bcrypt.compare(password, user.password);
     if (!doMatch) {
-      const error = new Error("올바르지 않은 비밀번호입니다.");
-      error.statusCode = 422;
-      return next(error);
+      const userError = new Error("올바르지 않은 비밀번호입니다.");
+      userError.statusCode = 422;
+      return next(userError);
     }
     const token = jwt.sign(
       {
@@ -88,26 +90,28 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postReset = async (req, res, next) => {
   try {
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-      const error = new Error("인증이 실패하였습니다.");
-      error.statusCode = 422;
-      error.data = errors.array();
-      return next(error);
+    console.log(req.body.email);
+    const errors = validationResult(req);
+    const errorsArr = errors.array();
+    if (!errors.isEmpty()) {
+      const validationError = new Error(errorsArr[0].msg);
+      validationError.statusCode = 422;
+      validationError.data = errors.array();
+      return next(validationError);
     }
     crypto.randomBytes(32, async (err, buf) => {
       const resetToken = buf.toString("hex");
       const email = req.body.email;
       const user = await User.findOne({ email });
       if (!user) {
-        const error = new Error(
+        const userError = new Error(
           "입력하신 이메일로 가입한 계정이 존재하지 않습니다."
         );
-        error.statusCode = 404;
-        return next(error);
+        userError.statusCode = 404;
+        return next(userError);
       }
       user.resetToken = resetToken;
-      user.resetTokenExpiration = Date.now() + 300000;
+      user.resetTokenExpiration = Date.now() + 600000;
       await user.save();
       const msg = {
         to: req.body.email,
@@ -116,7 +120,10 @@ exports.postReset = async (req, res, next) => {
         html: `<p>비밀번호를 복구하려면 <a href="http://127.0.0.1:5000/reset/${resetToken}">여기</a>를 클릭하세요.</p>`,
       };
       sgMail.send(msg);
-      res.status(204).end();
+      res.status(200).json({
+        message: "success",
+        data: null,
+      });
     });
   } catch (err) {
     if (!err.statusCode) err.statusCode = 500;
@@ -140,7 +147,7 @@ exports.getNewPassword = async (req, res, next) => {
       });
     }
     res.status(200).render("new-password", {
-      userId: user._id.toString(),
+      userId: user._id + "",
       passwordToken: token,
     });
   } catch (err) {

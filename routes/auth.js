@@ -15,7 +15,7 @@ router.post(
       .trim()
       .not()
       .isEmpty()
-      .withMessage("비밀번호를 입력되지 않았습니다."),
+      .withMessage("비밀번호가 입력되지 않았습니다."),
   ],
   authController.postSignup
 );
@@ -31,7 +31,7 @@ router.post(
       .trim()
       .not()
       .isEmpty()
-      .withMessage("비밀번호를 입력되지 않았습니다."),
+      .withMessage("비밀번호가 입력되지 않았습니다."),
   ],
   authController.postLogin
 );
