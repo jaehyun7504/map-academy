@@ -43,7 +43,7 @@ function Login({ show, submit, toggleShow }) {
         onSubmit={handleSubmit}
       >
         <div className={classes.close} onClick={toggleShow}>
-          <i class="fas fa-times" />
+          <i className="fas fa-times" />
         </div>
         <TextValidator
           id="email"
