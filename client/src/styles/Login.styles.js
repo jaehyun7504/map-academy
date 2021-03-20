@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
+import sizes from "./_sizes";
 
 const useStyles = makeStyles({
   Login: {
@@ -17,6 +18,9 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
     zIndex: "20",
+    [sizes.down("xs")]: {
+      width: "32rem",
+    },
   },
   input: {
     width: "24rem",
@@ -50,6 +54,10 @@ const useStyles = makeStyles({
     fontSize: "2rem",
     color: "#333",
     cursor: "pointer",
+    [sizes.down("xs")]: {
+      top: "1.5rem",
+      right: "1.5rem",
+    },
   },
 });
 

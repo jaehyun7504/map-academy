@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     display: ({ isAuth }) => (!isAuth ? "block" : "none"),
   },
-  logout: {
+  signout: {
     width: "6rem",
     cursor: "pointer",
     display: ({ isAuth }) => (isAuth ? "block" : "none"),

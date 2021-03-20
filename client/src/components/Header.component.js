@@ -46,7 +46,7 @@ function Header() {
 
   const toggleShow = () => setShow(!show);
 
-  const handleLogout = () => {
+  const handleSignout = () => {
     tDispatch({ type: "DELETE" });
     aDispatch({ type: "TOGGLE" });
   };
@@ -62,7 +62,7 @@ function Header() {
       <button className={classes.login} type="button" onClick={toggleShow}>
         로그인
       </button>
-      <button className={classes.logout} type="button" onClick={handleLogout}>
+      <button className={classes.signout} type="button" onClick={handleSignout}>
         로그아웃
       </button>
     </header>
