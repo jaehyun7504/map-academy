@@ -8,8 +8,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 function MenuDrawer(props) {
-  const classes = useStyles();
   const [state, setState] = React.useState({ show: false });
+  const classes = useStyles();
   const items = [
     { name: "학원 소개", link: "/about" },
     { name: "공지 사항", link: "/notices" },
@@ -41,9 +41,6 @@ function MenuDrawer(props) {
             <ListItemText primary={item.name} />
           </ListItem>
         ))}
-        <ListItem button>
-          <ListItemText secondary="로그인" />
-        </ListItem>
       </List>
     </div>
   );

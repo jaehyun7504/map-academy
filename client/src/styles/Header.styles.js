@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/styles";
-import sizes from "./_sizes";
 
 const useStyles = makeStyles({
   Header: {
@@ -12,11 +11,13 @@ const useStyles = makeStyles({
   logo: {
     textDecoration: "none",
   },
-  button: {
+  login: {
     cursor: "pointer",
-    [sizes.down("md")]: {
-      display: "none",
-    },
+    display: ({ isAuth }) => (isAuth ? "block" : "none"),
+  },
+  logout: {
+    cursor: "pointer",
+    display: ({ isAuth }) => (!isAuth ? "block" : "none"),
   },
 });
 
