@@ -1,30 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router";
 import useStyles from "../styles/Edit.styles";
 
-function Edit({ hasImage, isEditing, content = { title: "", body: "" } }) {
+function Edit({ hasImage, isUpdating, match }) {
   const classes = useStyles();
 
   const [state, setState] = useState({
-    title: content.title,
-    body: content.body,
+    title: "",
+    body: "",
   });
   if (hasImage) setState({ ...state, image: null });
+  const content = !hasImage ? "notices" : "articles";
+
+  useEffect(() => {
+    if (isUpdating) {
+      fetch(`/api/${content}/${match.params.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setState({
+            title: data.data.title,
+            body: data.data.body,
+          });
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [isUpdating, content, match.params.id]);
 
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
-
   const handleFileChange = (e) => {
     setState({ ...state, image: e.target.files[0] });
   };
 
-  const createContent = (formData) => {
-    fetch(`/api/${!hasImage ? "notices" : "articles"}/`, {
-      method: "POST",
+  const editContent = (formData) => {
+    fetch(`/api/${content}/${isUpdating ? match.params.id : ""}`, {
+      method: !isUpdating ? "POST" : "PATCH",
       body: formData,
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then((res) => {
         setState({
           title: "",
           body: "",
@@ -33,26 +47,7 @@ function Edit({ hasImage, isEditing, content = { title: "", body: "" } }) {
           setState({ ...state, image: null });
           document.getElementById("image").value = "";
         }
-      })
-      .catch((err) => console.error(err));
-  };
-
-  // 수정 전
-  const updateContent = (formData) => {
-    fetch(`/api/${!hasImage ? "notices" : "articles"}/`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setState({
-          title: "",
-          body: "",
-        });
-        if (hasImage) {
-          setState({ ...state, image: null });
-          document.getElementById("image").value = "";
-        }
+        <Redirect to={`/${content}`} />;
       })
       .catch((err) => console.error(err));
   };
@@ -65,22 +60,7 @@ function Edit({ hasImage, isEditing, content = { title: "", body: "" } }) {
     if (hasImage && state.image) {
       formData.append("image", state.image, state.image.name);
     }
-    return fetch(`/api/${!hasImage ? "notices" : "articles"}/`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setState({
-          title: "",
-          body: "",
-        });
-        if (hasImage) {
-          setState({ ...state, image: null });
-          document.getElementById("image").value = "";
-        }
-      })
-      .catch((err) => console.error(err));
+    editContent(formData);
   };
 
   const imageInput = hasImage ? (

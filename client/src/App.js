@@ -11,6 +11,7 @@ import About from "./components/About.component";
 import List from "./components/List.component";
 import Notice from "./components/Notice.component";
 import Article from "./components/Article.component";
+import Edit from "./components/Edit.component";
 
 function App() {
   return (
@@ -71,6 +72,42 @@ function App() {
                       render={(routeProps) => (
                         <Content>
                           <List type="articles" {...routeProps} />
+                        </Content>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="create/notice"
+                      render={(routeProps) => (
+                        <Content>
+                          <Edit {...routeProps} />
+                        </Content>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="create/article"
+                      render={(routeProps) => (
+                        <Content>
+                          <Edit hasImage {...routeProps} />
+                        </Content>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="update/notice"
+                      render={(routeProps) => (
+                        <Content>
+                          <Edit isUpdating {...routeProps} />
+                        </Content>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="update/article"
+                      render={(routeProps) => (
+                        <Content>
+                          <Edit hasImage isUpdating {...routeProps} />
                         </Content>
                       )}
                     />

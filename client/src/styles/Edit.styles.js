@@ -1,8 +1,12 @@
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  Edit: {},
-  form: {},
+  Edit: {
+    width: "100%",
+  },
+  form: {
+    margin: "0 auto",
+  },
   title: {
     width: "90vw",
     height: "5vh",
