@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useStyles from "../styles/List.styles";
+import { IsAuthContext } from "../contexts/isAuth.context";
 import Loader from "./Loader.component";
 import Item from "./Item.component";
 import Pagination from "./Pagination.component";
 import Footer from "./Footer.component";
 
-function List({ type, location }) {
+function List({ type, location, history }) {
+  const isAuth = useContext(IsAuthContext);
   const classes = useStyles();
 
   const [items, setItems] = useState([]);
@@ -27,6 +29,10 @@ function List({ type, location }) {
       [type]: items[type].filter((item) => item._id !== id),
     };
     setItems(newItems);
+  };
+
+  const handleClick = () => {
+    history.push(`/create/${type}`);
   };
 
   let rows = (
@@ -55,6 +61,12 @@ function List({ type, location }) {
     <Pagination direction="right" page={items.page + 1} />
   ) : null;
 
+  const createBtn = isAuth ? (
+    <button className={classes.button} onClick={handleClick}>
+      글쓰기
+    </button>
+  ) : null;
+
   let table = <Loader />;
   if (!loader) {
     table = (
@@ -71,6 +83,7 @@ function List({ type, location }) {
         </table>
         {prevBtn}
         {nextBtn}
+        {createBtn}
       </>
     );
   }

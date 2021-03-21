@@ -44,6 +44,12 @@ const useStyles = makeStyles({
       },
     },
   },
+  button: {
+    position: "absolute",
+    bottom: "0",
+    left: "50%",
+    transform: "translateX(-50%)",
+  },
 });
 
 export default useStyles;
