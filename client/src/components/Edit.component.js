@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router";
+import React, { useContext, useState, useEffect } from "react";
+import { TokenContext } from "../contexts/token.context";
 import useStyles from "../styles/Edit.styles";
 
-function Edit({ hasImage, isUpdating, match }) {
+function Edit({ hasImage, isUpdating, match, history }) {
+  const token = useContext(TokenContext);
+
   const classes = useStyles();
 
   const [state, setState] = useState({
     title: "",
     body: "",
+    image: "",
   });
-  if (hasImage) setState({ ...state, image: null });
   const content = !hasImage ? "notices" : "articles";
 
   useEffect(() => {
@@ -36,6 +38,9 @@ function Edit({ hasImage, isUpdating, match }) {
   const editContent = (formData) => {
     fetch(`/api/${content}/${isUpdating ? match.params.id : ""}`, {
       method: !isUpdating ? "POST" : "PATCH",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
       body: formData,
     })
       .then((res) => {
@@ -47,7 +52,7 @@ function Edit({ hasImage, isUpdating, match }) {
           setState({ ...state, image: null });
           document.getElementById("image").value = "";
         }
-        <Redirect to={`/${content}`} />;
+        history.push(`/${content}`);
       })
       .catch((err) => console.error(err));
   };

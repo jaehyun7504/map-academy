@@ -21,6 +21,14 @@ function List({ type, location }) {
       .catch((err) => console.error(err));
   }, [type, location.search]);
 
+  const deleteItem = (id) => {
+    const newItems = {
+      ...items,
+      [type]: items[type].filter((item) => item._id !== id),
+    };
+    setItems(newItems);
+  };
+
   let rows = (
     <tr className={classes.row}>
       <td className={classes.col}></td>
@@ -30,7 +38,14 @@ function List({ type, location }) {
   );
   if (items[type]) {
     rows = items[type].map((item, i) => (
-      <Item key={item._id} item={item} i={i} p={items.page} />
+      <Item
+        key={item._id}
+        type={type}
+        item={item}
+        i={i}
+        p={items.page}
+        deleteItem={deleteItem}
+      />
     ));
   }
   const prevBtn = items.hasPrev ? (

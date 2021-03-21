@@ -77,7 +77,7 @@ function App() {
                     />
                     <Route
                       exact
-                      path="create/notice"
+                      path="/create/notices"
                       render={(routeProps) => (
                         <Content>
                           <Edit {...routeProps} />
@@ -86,7 +86,7 @@ function App() {
                     />
                     <Route
                       exact
-                      path="create/article"
+                      path="/create/articles"
                       render={(routeProps) => (
                         <Content>
                           <Edit hasImage {...routeProps} />
@@ -95,7 +95,7 @@ function App() {
                     />
                     <Route
                       exact
-                      path="update/notice"
+                      path="/update/notices/:id"
                       render={(routeProps) => (
                         <Content>
                           <Edit isUpdating {...routeProps} />
@@ -104,7 +104,7 @@ function App() {
                     />
                     <Route
                       exact
-                      path="update/article"
+                      path="/update/articles/:id"
                       render={(routeProps) => (
                         <Content>
                           <Edit hasImage isUpdating {...routeProps} />
