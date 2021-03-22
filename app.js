@@ -8,14 +8,16 @@ const multer = require("multer");
 const compression = require("compression");
 const morgan = require("morgan");
 const helmet = require("helmet");
-const dotenv = require("dotenv");
 const noticeRoute = require("./routes/notice");
 const articleRoute = require("./routes/article");
 const lectureRoute = require("./routes/lecture");
 const authRoutes = require("./routes/auth");
 const authController = require("./controllers/auth");
 
-dotenv.config({ path: path.join(__dirname, "config.env") });
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = require("dotenv");
+  dotenv.config({ path: path.join(__dirname, "config.env") });
+}
 
 const PORT = process.env.PORT || 5000;
 const RW_USERNAME = process.env.RW_USERNAME;
