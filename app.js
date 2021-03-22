@@ -16,8 +16,11 @@ const authController = require("./controllers/auth");
 dotenv.config({ path: path.join(__dirname, "config.env") });
 
 const PORT = process.env.PORT || 5000;
+const RW_USERNAME = process.env.RW_USERNAME;
+const RW_PASSWORD = process.env.RW_PASSWORD;
+const DEFAULT_DB = process.env.DEFAULT_DB;
 const MONGODB_URI = `
-  mongodb+srv://${process.env.RW_USERNAME}:${process.env.RW_PASSWORD}@cluster0.r1ie0.mongodb.net/map-academy?retryWrites=true&w=majority
+  mongodb+srv://${RW_USERNAME}:${RW_PASSWORD}@cluster0.r1ie0.mongodb.net/${DEFAULT_DB}?retryWrites=true&w=majority
 `;
 
 const app = express();
