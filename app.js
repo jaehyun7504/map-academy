@@ -1,11 +1,13 @@
-/* eslint-disable no-console */
 const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const multer = require("multer");
 const { nanoid } = require("nanoid");
+const multer = require("multer");
+const compression = require("compression");
+const morgan = require("morgan");
+const helmet = require("helmet");
 const dotenv = require("dotenv");
 const noticeRoute = require("./routes/notice");
 const articleRoute = require("./routes/article");
@@ -23,9 +25,12 @@ const MONGODB_URI = `
   mongodb+srv://${RW_USERNAME}:${RW_PASSWORD}@cluster0.r1ie0.mongodb.net/${DEFAULT_DB}?retryWrites=true&w=majority
 `;
 
-const app = express();
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
 
-const fileStorage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "images"),
   filename: (req, file, cb) => cb(null, `${nanoid(12)}-${file.originalname}`),
 });
@@ -35,25 +40,19 @@ const fileFilter = (req, file, cb) => {
     : cb(null, false);
 };
 
+const app = express();
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.use(morgan("dev"));
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  })
-);
-app.use(
-  multer({
-    storage: fileStorage,
-    fileFilter: fileFilter,
-  }).single("image")
-);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ storage, fileFilter }).single("image"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
@@ -67,12 +66,12 @@ app.use("/api/notices/", noticeRoute);
 app.use("/api/articles/", articleRoute);
 app.use("/api/lectures/", lectureRoute);
 app.use("/api/", authRoutes);
-app.use((req, res, next) => {
+app.use((req, res, next) =>
   res.status(404).json({
     message: "error",
     error: "잘못된 요청입니다.",
-  });
-});
+  })
+);
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   res.status(statusCode).json({
@@ -87,5 +86,5 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => app.listen(PORT, () => console.log(`Listening on port ${PORT}`)))
-  .catch((err) => console.error(`💥 ${err}`));
+  .then(() => app.listen(PORT))
+  .catch((err) => console.error(err));
