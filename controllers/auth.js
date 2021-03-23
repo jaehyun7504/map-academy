@@ -117,7 +117,7 @@ exports.postReset = async (req, res, next) => {
         to: req.body.email,
         from: process.env.SENDGRID_SENDER_EMAIL,
         subject: "[맵학원] 비밀번호 복구 요청",
-        html: `<p>비밀번호를 복구하려면 <a href="http://127.0.0.1:5000/reset/${resetToken}">여기</a>를 클릭하세요.</p>`,
+        html: `<p>비밀번호를 복구하려면 <a href="https://map-academy.herokuapp.com/reset/${resetToken}">여기</a>를 클릭하세요.</p>`,
       };
       sgMail.send(msg);
       res.status(200).json({

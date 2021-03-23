@@ -74,3 +74,8 @@
 ::ffff:127.0.0.1 - - [23/Mar/2021:08:32:45 +0000] "GET /api/articles/6059a7a4751ef659bc4f3201 HTTP/1.1" 200 167 "http://localhost:3000/articles/6059a7a4751ef659bc4f3201" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
 ::ffff:127.0.0.1 - - [23/Mar/2021:08:32:47 +0000] "GET /api/articles/ HTTP/1.1" 304 - "http://localhost:3000/articles" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
 ::ffff:127.0.0.1 - - [23/Mar/2021:08:33:02 +0000] "DELETE /api/articles/6059a7a4751ef659bc4f3201 HTTP/1.1" 204 - "http://localhost:3000/articles" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
+::ffff:127.0.0.1 - - [23/Mar/2021:08:55:17 +0000] "GET /reset/cb638f879715a750ba7eca2ea7ad31c095ce10d1029d03d6088a6886eebd8eee HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
+::ffff:127.0.0.1 - - [23/Mar/2021:08:55:17 +0000] "GET /css/container.css HTTP/1.1" 200 143 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
+::ffff:127.0.0.1 - - [23/Mar/2021:08:55:17 +0000] "GET /favicon.ico HTTP/1.1" 404 56 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
+::ffff:127.0.0.1 - - [23/Mar/2021:08:56:20 +0000] "GET /reset/bb2bdae76f6f1d36184a001a6fbc20b20f17dd5854850d58eeb06c87f7c605cd HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
+::ffff:127.0.0.1 - - [23/Mar/2021:08:56:20 +0000] "GET /css/container.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0"
