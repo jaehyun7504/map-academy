@@ -1,4 +1,5 @@
 const Article = require("../models/article");
+const S3 = require("../utils/S3");
 const deleteFile = require("../utils/deleteFile");
 
 const ARTICLES_PER_PAGE = 10;
@@ -46,13 +47,13 @@ exports.getArticle = async (req, res) => {
 
 exports.createArticle = async (req, res) => {
   try {
-    const newArticle = new Article({
-      title: req.body.title,
-      body: req.body.body,
-      imageUrl: req.file ? req.file.path.replace("\\", "/") : null,
-      date: new Date().toISOString().split("T")[0],
-    });
+    const title = req.body.title;
+    const body = req.body.body;
+    const imageUrl = req.file ? req.file.path.replace("\\", "/") : "";
+    const date = new Date().toISOString().split("T")[0];
+    const newArticle = new Article({ title, body, imageUrl, date });
     await newArticle.save();
+    if (imageUrl) S3.uploadFile(imageUrl);
     res.status(201).json({
       message: "success",
       data: newArticle,
@@ -72,7 +73,9 @@ exports.updateArticle = async (req, res) => {
     updatedArticle.body = req.body.body;
     if (req.file) {
       deleteFile(updatedArticle.imageUrl);
-      updatedArticle.imageUrl = req.file.path;
+      S3.deleteFile(updatedArticle.imageUrl);
+      updatedArticle.imageUrl = req.file.path.replace("\\", "/");
+      S3.uploadFile(updatedArticle.imageUrl);
     }
     await updatedArticle.save();
     res.status(200).json({
@@ -90,7 +93,10 @@ exports.updateArticle = async (req, res) => {
 exports.deleteArticle = async (req, res) => {
   try {
     const deletedArticle = await Article.findById(req.params.id);
-    deleteFile(deletedArticle.imageUrl);
+    if (deletedArticle.imageUrl) {
+      deleteFile(deletedArticle.imageUrl);
+      S3.deleteFile(deletedArticle.imageUrl);
+    }
     await Article.findByIdAndDelete(req.params.id);
     res.status(204).end();
   } catch (err) {

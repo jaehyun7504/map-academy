@@ -45,7 +45,7 @@ const fileFilter = (req, file, cb) => {
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("views", "views");
+app.set("views", "./views");
 
 app.use(helmet());
 app.use(compression());
@@ -88,5 +88,5 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => app.listen(PORT))
+  .then(() => app.listen(PORT, () => console.log(`Listening in port ${PORT}`)))
   .catch((err) => console.error(err));
