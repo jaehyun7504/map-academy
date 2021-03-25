@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: path.join(__dirname, "config.env") });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 const RW_USERNAME = process.env.RW_USERNAME;
 const RW_PASSWORD = process.env.RW_PASSWORD;
 const DEFAULT_DB = process.env.DEFAULT_DB;
