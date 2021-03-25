@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const { nanoid } = require("nanoid");
 const multer = require("multer");
 const compression = require("compression");
-const morgan = require("morgan");
 const helmet = require("helmet");
 const noticeRoute = require("./routes/notice");
 const articleRoute = require("./routes/article");
@@ -43,7 +42,6 @@ app.set("views", "./views");
 
 app.use(helmet());
 app.use(compression());
-app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ storage, fileFilter }).single("image"));
