@@ -1,5 +1,4 @@
 const path = require("path");
-const fs = require("fs");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -26,11 +25,6 @@ const DEFAULT_DB = process.env.DEFAULT_DB;
 const MONGODB_URI = `
   mongodb+srv://${RW_USERNAME}:${RW_PASSWORD}@cluster0.r1ie0.mongodb.net/${DEFAULT_DB}?retryWrites=true&w=majority
 `;
-
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "access.log"),
-  { flags: "a" }
-);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "images"),
@@ -88,5 +82,5 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => app.listen(PORT, () => console.log(`Listening in port ${PORT}`)))
+  .then(() => app.listen(PORT))
   .catch((err) => console.error(err));
